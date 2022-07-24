@@ -4,7 +4,7 @@
  * @Author: hxx
  * @Date: 2022-07-24 17:40:02
  * @LastEditors: Aidam_Bo
- * @LastEditTime: 2022-07-24 23:06:29
+ * @LastEditTime: 2022-07-24 23:15:24
 -->
 <template>
   <div class="wrap">
@@ -24,28 +24,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { Calendar, Cell } from "vant";
+import { ref, computed } from "vue"
+import { Calendar, Cell } from "vant"
 
-const show = ref(false);
-const date = ref(new Date());
-const formatDate = (date: Date) => `${date.getMonth() + 1}/${date.getDate()}`;
+const show = ref(false)
+const date = ref(new Date())
+const formatDate = (date: Date) => `${date.getMonth() + 1}/${date.getDate()}`
 
 const onConfirm = (value: Date) => {
-  show.value = !show.value;
-  date.value = value;
-};
+  show.value = !show.value
+  date.value = value
+}
 
-const getDateList = (n: number, time: Date) => {
-  var n = n;
-  var list = [];
-  var d = time;
-  var year = d.getFullYear();
-  var mon = d.getMonth() + 1;
-  var day = d.getDate();
-  var date = d.getDate();
+const getDateList = (nums: number, time: Date) => {
+  const list = []
+  const d = time
+  let n = nums,
+    year = d.getFullYear(),
+    mon = d.getMonth() + 1,
+    day = d.getDate()
+  // date = d.getDate();
   function getWeek(d: number) {
-    var weeks = [
+    const weeks = [
       "星期日",
       "星期一",
       "星期二",
@@ -53,41 +53,38 @@ const getDateList = (n: number, time: Date) => {
       "星期四",
       "星期五",
       "星期六",
-    ];
-    var week = weeks[d];
-    return week;
+    ]
+    return weeks[d]
   }
-  // debugger;
   while (n > 0) {
     if (day <= n) {
-      // debugger;
       if (mon > 1) {
-        mon = mon - 1;
+        mon = mon - 1
       } else {
-        year = year - 1;
-        mon = 12;
+        year = year - 1
+        mon = 12
       }
     }
-    d.setDate(d.getDate() - 1);
-    year = d.getFullYear();
-    mon = d.getMonth() + 1;
-    day = d.getDate();
+    d.setDate(d.getDate() - 1)
+    year = d.getFullYear()
+    mon = d.getMonth() + 1
+    day = d.getDate()
     let s =
       year +
       "-" +
       (mon < 10 ? "0" + mon : mon) +
       "-" +
-      (day < 10 ? "0" + day : day);
-    console.log(s);
+      (day < 10 ? "0" + day : day)
+    console.log(s)
     list.push({
       week: getWeek(new Date(s).getDay()),
       date: s,
-    });
-    n--;
+    })
+    n--
   }
-  return list;
-};
-const dataList = computed(() => getDateList(7, date.value));
+  return list
+}
+const dataList = computed(() => getDateList(7, date.value))
 </script>
 
 
